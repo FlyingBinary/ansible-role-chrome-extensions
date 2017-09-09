@@ -3,7 +3,7 @@
 - name: Check if Google Chrome application installed
   when: global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions
   stat:
-    path: /Applications/Google\ Chrome.app
+    path: "/Applications/Google Chrome.app"
   register: st
 
 - debug:
