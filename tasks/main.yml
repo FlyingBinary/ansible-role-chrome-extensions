@@ -8,7 +8,8 @@
 
 - name: Set status of extension lists
   set_fact:
-    ext_list: bool (global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions)
+#    ext_list: bool (global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions)
+    ext_list: {{ global_chrome_extensions|length }} + {{ group_chrome_extensions|length }} + {{ personal_chrome_extensions|length }} > 0
 
 - debug:
     msg: "Extension list is {{ ext_list }}"

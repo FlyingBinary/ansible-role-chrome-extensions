@@ -6,7 +6,7 @@
   register: st
 
 - set_fact:
-    app_installed = bool (st.stat.exists)
+    app_installed = st.stat.exists
 
 #  - debug:
 #      msg: "App state is {{ st.stat.exists }}"
