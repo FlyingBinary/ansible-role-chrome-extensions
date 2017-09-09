@@ -1,27 +1,35 @@
 ---
 
-- include: check_app.yml
-
 # Role states:
-#   - app = yes, ext = yes  -> Proceed with installing extensions
 #   - app = yes, ext =  no  -> Nothing to do, exit silently
-#   - app =  no, ext = yes  -> Print debug message, but don't fail the role unless role_strict is yes
 #   - app =  no, ext =  no  -> Nothing to do, exit silently
+#   - app = yes, ext = yes  -> Proceed with installing extensions
+#   - app =  no, ext = yes  -> Print debug message, but don't fail the role unless role_strict is yes
 
+- name: Set status of extension lists
+  set_fact:
+    ext_list: bool (global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions)
 
 - debug:
-    msg: "Role state is {{ role_state }}"
+    msg: "Extension list is {{ ext_list }}"
+
+- include: check_app.yml
+  when: ext_list
+
+- debug:
+    msg: "Appliction installed is {{ app_installed }}"
+  when: ext_list
 
 - debug:
     msg: "Could not find Google Chrome application - proceeding to next task"
-  when: role_state == "app_no_ext_yes" and not role_strict
+  when: ext_list and not app_installed
 
 - debug:
     msg: "Could not find Google Chrome application - failing this play"
-  when: role_state == "app_no_ext_yes" and role_strict
+  when: ext_list and not app_installed and role_strict
 
 - include: install_ext.yml
-  when: role_state == "app_yes_ext_yes"
+  when: ext_list and app_installed
 
 #
 #
