@@ -1,38 +1,63 @@
 ---
 
-- name: Install node package manager
-  homebrew: "name=npm state=present"
-  when: global_google_fonts or group_google_fonts or personal_google_fonts
+- include: check_app.yml
 
-- name: Install Google Fonts Installer
-  shell: npm install -g google-font-installer
-  when: global_google_fonts or group_google_fonts or personal_google_fonts
+- debug:
+    msg: "Role state is {{ role_state }}"
 
-# 2017-0909
-# Current version of GFI uses the deprecated os.tmpDir call, and Ansible throws an error
-# Patch the single offending line of code, rather than ignoring Ansible errors
-# This task can be removed once GFI is updated
-# https://github.com/lordgiotto/google-font-installer/pull/7
-- name: Patch Google Fonts Installer
-#  shell: 'sed -i "" "s/os.tmpDir/os.tmpdir/g" /usr/local/lib/node_modules/google-font-installer/lib/system-font.js'
-  when: global_google_fonts or group_google_fonts or personal_google_fonts
-  lineinfile:
-    path: /usr/local/lib/node_modules/google-font-installer/lib/system-font.js
-    regexp: '^(.*)os.tmpDir(.*)$'
-    line: '\1os.tmpDir\2'
-    backrefs: yes
 
-- name: Install global Google Fonts
-  shell: gfi install "{{ item }}"
-  with_items: "{{ global_google_fonts }}"
-  when: global_google_fonts
-
-- name: Install group Google Fonts
-  shell: gfi install "{{ item }}"
-  with_items: "{{ group_google_fonts }}"
-  when: group_google_fonts
-
-- name: Install personal Google Fonts
-  shell: gfi install "{{ item }}"
-  with_items: "{{ personal_google_fonts }}"
-  when: personal_google_fonts
+#
+#
+#
+#
+#  - name:
+#    fail:
+#      msg: "Could not find Google Chrome application"
+#
+#
+#
+#  - name: Create external extensions directory
+#    when: global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions
+#
+#  - name: Create external extensions preferences files
+#    when: global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions
+#
+#
+#
+#
+#  - name: Install node package manager
+#    homebrew: "name=npm state=present"
+#    when: global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions
+#
+#  - name: Install Google Fonts Installer
+#    shell: npm install -g google-font-installer
+#    when: global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions
+#
+#  # 2017-0909
+#  # Current version of GFI uses the deprecated os.tmpDir call, and Ansible throws an error
+#  # Patch the single offending line of code, rather than ignoring Ansible errors
+#  # This task can be removed once GFI is updated
+#  # https://github.com/lordgiotto/google-font-installer/pull/7
+#  - name: Patch Google Fonts Installer
+#  #  shell: 'sed -i "" "s/os.tmpDir/os.tmpdir/g" /usr/local/lib/node_modules/google-font-installer/lib/system-font.js'
+#    when: global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions
+#    lineinfile:
+#      path: /usr/local/lib/node_modules/google-font-installer/lib/system-font.js
+#      regexp: '^(.*)os.tmpDir(.*)$'
+#      line: '\1os.tmpDir\2'
+#      backrefs: yes
+#
+#  - name: Install global Google Fonts
+#    shell: gfi install "{{ item }}"
+#    with_items: "{{ global_chrome_extensions }}"
+#    when: global_chrome_extensions
+#
+#  - name: Install group Google Fonts
+#    shell: gfi install "{{ item }}"
+#    with_items: "{{ group_chrome_extensions }}"
+#    when: group_chrome_extensions
+#
+#  - name: Install personal Google Fonts
+#    shell: gfi install "{{ item }}"
+#    with_items: "{{ personal_chrome_extensions }}"
+#    when: personal_chrome_extensions

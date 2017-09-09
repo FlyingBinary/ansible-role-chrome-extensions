@@ -1,6 +1,6 @@
-# superlumic-google-fonts
+# superlumic-chrome-extensions
 
-Ansible role to install a user-defined selection of Google Fonts on the computer. This role is part of the FlyingBinary extensions to the Superlumic project that aims to simplify repeat computer setups on macOS, 10.10 and up.
+Ansible role to install a user-defined selection of Google Chrome Extensions on the computer. This role is part of the FlyingBinary extensions to the Superlumic project that aims to simplify repeat computer setups on macOS, 10.10 and up.
 
 ## Requirements
 

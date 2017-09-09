@@ -1,0 +1,23 @@
+---
+
+- name: Check if Google Chrome application installed
+  when: global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions
+  stat:
+    path: /Applications/Google\ Chrome.app
+  register: st
+
+- set_fact:
+    role_state: "app_yes_ext_yes"
+    when: st.stat.exists and (global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions)
+
+- set_fact:
+    role_state: "app_no_ext_yes"
+    when: not st.stat.exists and (global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions)
+
+- set_fact:
+    role_state: "app_no_ext_no"
+    when: not st.stat.exists and not (global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions)
+
+- set_fact:
+    role_state: "app_yes_ext_no"
+    when: st.stat.exists and not (global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions)

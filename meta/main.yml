@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Ian Taylor
-  description: Ansible role to install a user-defined selection of Google Fonts on the computer. This role is part of the FlyingBinary extensions to the Superlumic project that aims to simplify repeat computer setups on macOS, 10.10 and up.
+  description: Ansible role to install a user-defined selection of Google Chrome Extensions on the computer. This role is part of the FlyingBinary extensions to the Superlumic project that aims to simplify repeat computer setups on macOS, 10.10 and up.
   license: MIT
   min_ansible_version: 1.2
   platforms:
@@ -10,6 +10,4 @@ galaxy_info:
         - all
   categories:
     - system
-dependencies:
-  - name: IanTaylorFB.superlumic-homebrew
-    version: fbmaster
+dependencies: []

@@ -18,6 +18,6 @@
 # The role does nothing unless at least one of these contains at least
 # one font name at run time.
 
-global_google_fonts: []
-group_google_fonts: []
-personal_google_fonts: []
+global_chrome_extensions: []
+group_chrome_extensions: []
+personal_chrome_extensions: []
