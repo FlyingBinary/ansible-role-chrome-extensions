@@ -1,0 +1,26 @@
+---
+
+- name: Create external extensions directory
+  file:
+    path: "~/Library/Application Support/Google/Chrome/External Extensions"
+    state: directory
+    mode: 0755
+
+- name: Install global Chrome extension preferences files
+  copy:
+    src: ../files/preference.json
+    dest: "~/Library/Application Support/Google/Chrome/External Extensions/{{ item.id }}.json"
+    state: file
+    mode: 0644
+  with_items: "{{ global_chrome_extensions }}"
+  when: global_chrome_extensions
+
+#  - name: Install group Chrome extension preferences files
+#    shell: gfi install "{{ item }}"
+#    with_items: "{{ group_chrome_extensions }}"
+#    when: group_chrome_extensions
+#
+#  - name: Install personal Chrome extension preferences files
+#    shell: gfi install "{{ item }}"
+#    with_items: "{{ personal_chrome_extensions }}"
+#    when: personal_chrome_extensions

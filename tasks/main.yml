@@ -2,9 +2,26 @@
 
 - include: check_app.yml
 
+# Role states:
+#   - app = yes, ext = yes  -> Proceed with installing extensions
+#   - app = yes, ext =  no  -> Nothing to do, exit silently
+#   - app =  no, ext = yes  -> Print debug message, but don't fail the role unless role_strict is yes
+#   - app =  no, ext =  no  -> Nothing to do, exit silently
+
+
 - debug:
     msg: "Role state is {{ role_state }}"
 
+- debug:
+    msg: "Could not find Google Chrome application - proceeding to next task"
+  when: role_state == "app_no_ext_yes" and not role_strict
+
+- debug:
+    msg: "Could not find Google Chrome application - failing this play"
+  when: role_state == "app_no_ext_yes" and role_strict
+
+- include: install_ext.yml
+  when: role_state == "app_yes_ext_yes"
 
 #
 #

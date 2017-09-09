@@ -21,3 +21,5 @@
 global_chrome_extensions: []
 group_chrome_extensions: []
 personal_chrome_extensions: []
+
+role_strict: no
