@@ -6,6 +6,18 @@
     path: /Applications/Google\ Chrome.app
   register: st
 
+- debug:
+    msg: "App state is {{ st.stat.exists }}"
+
+- debug:
+    msg: "Inverted app state is {{ not st.stat.exists }}"
+
+- debug:
+    msg: "Ext state is {{ (global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions) }}"
+
+- debug:
+    msg: "Inverted ext state is {{ not (global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions) }}"
+
 - set_fact:
     role_state: "app_yes_ext_yes"
     when: st.stat.exists and (global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions)
