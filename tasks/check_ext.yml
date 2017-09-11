@@ -1,0 +1,53 @@
+---
+
+# We have three lists of extensions:
+#  - global
+#  - group
+#  - personal
+# We want one fact that tells us whether we have any 1 or more lists non-empty
+# This fact is
+#  - ext_list = set True if any 1 or more list is non-empty
+# This seems long winded, but it works, pending a better method
+
+- set_fact:
+    global_ext: False
+
+- debug:
+    msg: "1 Global extension list switch is {{ global_ext }}"
+
+- set_fact:
+    group_ext: False
+
+- set_fact:
+    personal_ext: False
+
+- set_fact:
+    global_ext: True
+  when: global_chrome_extensions
+
+- debug:
+    msg: "2 Global extension list switch is {{ global_ext }}"
+
+- set_fact:
+    global_ext: True
+  when: group_chrome_extensions
+
+- debug:
+    msg: "3 Group extension list switch is {{ group_ext }}"
+
+- set_fact:
+    global_ext: True
+  when: personal_chrome_extensions
+
+- debug:
+    msg: "4 Personal extension list switch is {{ personal_ext }}"
+
+- set_fact:
+    ext_list: False
+
+- set_fact:
+    ext_list: True
+  when: global_ext or group_ext or personal_ext
+
+- debug:
+    msg: "5 Overall extension list switch is {{ ext_list }}"

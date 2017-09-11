@@ -6,61 +6,15 @@
 #   - app = yes, ext = yes  -> Proceed with installing extensions
 #   - app =  no, ext = yes  -> Print debug message, but don't fail the role unless role_strict is yes
 
-- set_fact:
-    global_ext: False
+# Check status of our three lists of extensions
+# Sets ext_list
+- include: check_ext.yml
 
-- debug:
-    msg: "1 Global extension list switch is {{ global_ext }}"
+# Check Google Chrome install status
+# Sets app_installed
+- include: check_app.yml
+  when: ext_list
 
-- set_fact:
-    group_ext: False
-
-- set_fact:
-    personal_ext: False
-
-- set_fact:
-    global_ext: True
-  when: global_chrome_extensions
-
-- debug:
-    msg: "2 Global extension list switch is {{ global_ext }}"
-
-- set_fact:
-    global_ext: True
-  when: group_chrome_extensions
-
-- debug:
-    msg: "3 Group extension list switch is {{ group_ext }}"
-
-- set_fact:
-    global_ext: True
-  when: personal_chrome_extensions
-
-- debug:
-    msg: "4 Personal extension list switch is {{ personal_ext }}"
-
-- set_fact:
-    ext_list: False
-
-- set_fact:
-    ext_list: True
-  when: global_ext or group_ext or personal_ext
-
-- debug:
-    msg: "5 Overall extension list switch is {{ ext_list }}"
-
-
-#  - name: Set status of extension lists
-#    set_fact:
-#  #    ext_list: bool (global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions)
-#      ext_list: "{{ global_chrome_extensions|length }} + {{ group_chrome_extensions|length }} + {{ personal_chrome_extensions|length }} > 0"
-#
-#  - debug:
-#      msg: "Extension list is {{ ext_list }}"
-#
-#  - include: check_app.yml
-#    when: ext_list
-#
 #  - debug:
 #      msg: "Appliction installed is {{ app_installed }}"
 #    when: ext_list
