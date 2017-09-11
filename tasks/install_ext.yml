@@ -23,7 +23,6 @@
   copy:
     src: ../files/preference.json
     dest: "~/Library/Application Support/Google/Chrome/External Extensions/{{ item.id }}.json"
-    state: file
     mode: 0644
   with_items: "{{ global_chrome_extensions }}"
   when: global_chrome_extensions
