@@ -40,7 +40,11 @@
     msg: "4 Personal extension list switch is {{ personal_ext }}"
 
 - set_fact:
-    ext_list: global_ext or group_ext or personal_ext
+    ext_list: False
+
+- set_fact:
+    ext_list: True
+  when: global_ext or group_ext or personal_ext
 
 - debug:
     msg: "5 Overall extension list switch is {{ ext_list }}"
