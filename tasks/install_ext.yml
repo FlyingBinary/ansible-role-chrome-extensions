@@ -11,12 +11,12 @@
 
 - debug:
     msg: "Extension {{ item }}"
-  with_items: "{{ global_chrome_extensions }}"
+  with_dict: "{{ global_chrome_extensions }}"
   when: global_chrome_extensions
 
 - debug:
     msg: "Extension id {{ item.value.id }}"
-  with_items: "{{ global_chrome_extensions }}"
+  with_dict: "{{ global_chrome_extensions }}"
   when: global_chrome_extensions
 
 - name: Install global Chrome extension preferences files
@@ -25,7 +25,7 @@
     dest: "~/Library/Application Support/Google/Chrome/External Extensions/{{ item.value.id }}.json"
     state: file
     mode: 0644
-  with_items: "{{ global_chrome_extensions }}"
+  with_dict: "{{ global_chrome_extensions }}"
   when: global_chrome_extensions
 
 #  - name: Install group Chrome extension preferences files
