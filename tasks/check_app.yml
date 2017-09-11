@@ -16,7 +16,7 @@
 
 - set_fact:
     app_installed: True
-  when: st.stat.exist
+  when: st.stat.exists
 
 - debug:
     msg: "3 App installed is {{ app_installed }}"
