@@ -25,6 +25,27 @@
 - debug:
     msg: "2 Global extension list switch is {{ global_ext }}"
 
+- set_fact:
+    global_ext: True
+  when: group_chrome_extensions
+
+- debug:
+    msg: "3 Group extension list switch is {{ group_ext }}"
+
+- set_fact:
+    global_ext: True
+  when: personal_chrome_extensions
+
+- debug:
+    msg: "4 Personal extension list switch is {{ personal_ext }}"
+
+- set_fact:
+    ext_list: global_ext or group_ext or personal_ext
+
+- debug:
+    msg: "5 Overall extension list switch is {{ ext_list }}"
+
+
 #  - name: Set status of extension lists
 #    set_fact:
 #  #    ext_list: bool (global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions)
