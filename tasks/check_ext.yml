@@ -9,7 +9,8 @@
 #  - ext_list = set True if any 1 or more list is non-empty
 # This seems long winded, but it works, pending a better method
 
-- set_fact:
+- name: Gathering extension list status
+  set_fact:
     global_ext: False
 
 - debug:

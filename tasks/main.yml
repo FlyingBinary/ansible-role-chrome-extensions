@@ -15,73 +15,11 @@
 - include: check_app.yml
   when: ext_list
 
-#  - debug:
-#      msg: "Appliction installed is {{ app_installed }}"
-#    when: ext_list
-#
-#  - debug:
-#      msg: "Could not find Google Chrome application - proceeding to next task"
-#    when: ext_list and not app_installed
-#
-#  - debug:
-#      msg: "Could not find Google Chrome application - failing this play"
-#    when: ext_list and not app_installed and role_strict
-#
-#  - include: install_ext.yml
-#    when: ext_list and app_installed
+# If we have extension list(s), but Google Chrome is not installed,
+# output a message and ext appropriately
+- include: quit_messages.yml
+  when: ext_list and not app_installed
 
-#
-#
-#
-#
-#  - name:
-#    fail:
-#      msg: "Could not find Google Chrome application"
-#
-#
-#
-#  - name: Create external extensions directory
-#    when: global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions
-#
-#  - name: Create external extensions preferences files
-#    when: global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions
-#
-#
-#
-#
-#  - name: Install node package manager
-#    homebrew: "name=npm state=present"
-#    when: global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions
-#
-#  - name: Install Google Fonts Installer
-#    shell: npm install -g google-font-installer
-#    when: global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions
-#
-#  # 2017-0909
-#  # Current version of GFI uses the deprecated os.tmpDir call, and Ansible throws an error
-#  # Patch the single offending line of code, rather than ignoring Ansible errors
-#  # This task can be removed once GFI is updated
-#  # https://github.com/lordgiotto/google-font-installer/pull/7
-#  - name: Patch Google Fonts Installer
-#  #  shell: 'sed -i "" "s/os.tmpDir/os.tmpdir/g" /usr/local/lib/node_modules/google-font-installer/lib/system-font.js'
-#    when: global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions
-#    lineinfile:
-#      path: /usr/local/lib/node_modules/google-font-installer/lib/system-font.js
-#      regexp: '^(.*)os.tmpDir(.*)$'
-#      line: '\1os.tmpDir\2'
-#      backrefs: yes
-#
-#  - name: Install global Google Fonts
-#    shell: gfi install "{{ item }}"
-#    with_items: "{{ global_chrome_extensions }}"
-#    when: global_chrome_extensions
-#
-#  - name: Install group Google Fonts
-#    shell: gfi install "{{ item }}"
-#    with_items: "{{ group_chrome_extensions }}"
-#    when: group_chrome_extensions
-#
-#  - name: Install personal Google Fonts
-#    shell: gfi install "{{ item }}"
-#    with_items: "{{ personal_chrome_extensions }}"
-#    when: personal_chrome_extensions
+# If everything is ok, actually install the extension preferences files
+- include: install_ext.yml
+  when: ext_list and app_installed

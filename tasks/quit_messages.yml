@@ -1,0 +1,9 @@
+---
+
+- fail:
+    msg: "Could not find Google Chrome application - failing this play"
+  when: ext_list and not app_installed and role_strict
+
+- debug:
+    msg: "Could not find Google Chrome application - proceeding to next task"
+  when: ext_list and not app_installed
