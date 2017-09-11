@@ -6,31 +6,50 @@
 #   - app = yes, ext = yes  -> Proceed with installing extensions
 #   - app =  no, ext = yes  -> Print debug message, but don't fail the role unless role_strict is yes
 
-- name: Set status of extension lists
-  set_fact:
-#    ext_list: bool (global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions)
-    ext_list: "{{ global_chrome_extensions|length }} + {{ group_chrome_extensions|length }} + {{ personal_chrome_extensions|length }} > 0"
+- set_fact:
+    global_ext: False
 
 - debug:
-    msg: "Extension list is {{ ext_list }}"
+    msg: "1 Global extension list switch is {{ global_ext }}"
 
-- include: check_app.yml
-  when: ext_list
+- set_fact:
+    group_ext: False
+
+- set_fact:
+    personal_ext: False
+
+- set_fact:
+    global_ext: True
+  when: global_chrome_extensions
 
 - debug:
-    msg: "Appliction installed is {{ app_installed }}"
-  when: ext_list
+    msg: "2 Global extension list switch is {{ global_ext }}"
 
-- debug:
-    msg: "Could not find Google Chrome application - proceeding to next task"
-  when: ext_list and not app_installed
-
-- debug:
-    msg: "Could not find Google Chrome application - failing this play"
-  when: ext_list and not app_installed and role_strict
-
-- include: install_ext.yml
-  when: ext_list and app_installed
+#  - name: Set status of extension lists
+#    set_fact:
+#  #    ext_list: bool (global_chrome_extensions or group_chrome_extensions or personal_chrome_extensions)
+#      ext_list: "{{ global_chrome_extensions|length }} + {{ group_chrome_extensions|length }} + {{ personal_chrome_extensions|length }} > 0"
+#
+#  - debug:
+#      msg: "Extension list is {{ ext_list }}"
+#
+#  - include: check_app.yml
+#    when: ext_list
+#
+#  - debug:
+#      msg: "Appliction installed is {{ app_installed }}"
+#    when: ext_list
+#
+#  - debug:
+#      msg: "Could not find Google Chrome application - proceeding to next task"
+#    when: ext_list and not app_installed
+#
+#  - debug:
+#      msg: "Could not find Google Chrome application - failing this play"
+#    when: ext_list and not app_installed and role_strict
+#
+#  - include: install_ext.yml
+#    when: ext_list and app_installed
 
 #
 #
