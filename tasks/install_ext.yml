@@ -6,19 +6,19 @@
     state: directory
     mode: 0755
 
-- debug:
-    msg: "Global extensions {{ global_chrome_extensions }}"
-
-- debug:
-    msg: "Extension {{ item }}"
-  with_items: "{{ global_chrome_extensions }}"
-  when: global_chrome_extensions
-
-- debug:
-    msg: "Extension id {{ item.id }}"
-  with_items: "{{ global_chrome_extensions }}"
-  when: global_chrome_extensions
-
+#  - debug:
+#      msg: "Global extensions {{ global_chrome_extensions }}"
+#
+#  - debug:
+#      msg: "Extension {{ item }}"
+#    with_items: "{{ global_chrome_extensions }}"
+#    when: global_chrome_extensions
+#
+#  - debug:
+#      msg: "Extension id {{ item.id }}"
+#    with_items: "{{ global_chrome_extensions }}"
+#    when: global_chrome_extensions
+#
 - name: Install global Chrome extension preferences files
   copy:
     src: ../files/preference.json

@@ -9,18 +9,18 @@
     path: "/Applications/Google Chrome.app"
   register: st
 
-- debug:
-    msg: "1 App state is {{ st.stat.exists }}"
-
+#  - debug:
+#      msg: "1 App state is {{ st.stat.exists }}"
+#
 - set_fact:
     app_installed: False
 
-- debug:
-    msg: "2 App installed is {{ app_installed }}"
-
+#  - debug:
+#      msg: "2 App installed is {{ app_installed }}"
+#
 - set_fact:
     app_installed: True
   when: st.stat.exists
 
-- debug:
-    msg: "3 App installed is {{ app_installed }}"
+#  - debug:
+#      msg: "3 App installed is {{ app_installed }}"
